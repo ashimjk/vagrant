@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vote-bg
+  labels:
+    role: vote
+spec:
+  selector:
+    role: vote
+    release: bluegreen
+    code: green
+  ports:
+    - port: 8080 ## For Cluster and For ExternalIP
+      targetPort: 80 ## For Pod
+      nodePort: 30002 ## For outside world
+  type: NodePort

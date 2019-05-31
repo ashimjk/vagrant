@@ -1,0 +1,18 @@
+## It is a cluster IP type
+## Unlike vote this doesn't need to be exposed to outside world
+## There is no NodePort in here
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    role: db
+    tier: back
+  name: db
+  namespace: staging
+spec:
+  selector:
+    role: db
+  ports:
+  - port: 5432
+    protocol: TCP
+    targetPort: 5432

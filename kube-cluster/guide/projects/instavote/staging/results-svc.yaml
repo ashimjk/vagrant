@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: results
+  labels:
+    role: results
+spec:
+  selector:
+    role: results
+    version: v1
+  ports:
+    - port: 8081 ## For Cluster and For ExternalIP
+      targetPort: 80 ## For Pod
+      nodePort: 30001 ## For outside world
+  type: NodePort
+  externalIPs:
+    - 192.168.56.103

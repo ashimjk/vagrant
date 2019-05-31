@@ -1,0 +1,41 @@
+Every 1.0s: kubectl get nodes,pods,svc,rs,deploy --show-labels --namespace instavote                                                                                                                                  Fri May 17 07:42:43 2019
+
+NAME           STATUS   ROLES    AGE     VERSION   LABELS
+node/kube-01   Ready    master   3d14h   v1.14.1   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=kube-01,kubernetes.io/os=linux,node-role.kubernetes.io/master=
+node/kube-02   Ready    <none>   3d14h   v1.14.1   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=kube-02,kubernetes.io/os=linux
+node/kube-03   Ready    <none>   3d14h   v1.14.1   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=kube-03,kubernetes.io/os=linux
+
+NAME                           READY   STATUS    RESTARTS   AGE     LABELS
+pod/db-7bd9c67878-lzmrp        1/1     Running   0          10m     app=postgres,pod-template-hash=7bd9c67878,role=db,tier=back,version=9.4
+pod/redis-5c4d8f7dd6-26m4j     1/1     Running   0          51m     app=redis,pod-template-hash=5c4d8f7dd6,role=redis,tier=back,version=latest
+pod/redis-5c4d8f7dd6-rgzxh     1/1     Running   0          51m     app=redis,pod-template-hash=5c4d8f7dd6,role=redis,tier=back,version=latest
+pod/results-65f8f74b77-lkkg4   1/1     Running   0          3m45s   app=node,pod-template-hash=65f8f74b77,role=results,version=v1
+pod/results-65f8f74b77-lmlcn   1/1     Running   0          3m45s   app=node,pod-template-hash=65f8f74b77,role=results,version=v1
+pod/results-65f8f74b77-wh8rw   1/1     Running   0          3m45s   app=node,pod-template-hash=65f8f74b77,role=results,version=v1
+pod/vote-68fcf79b55-7mqn9      1/1     Running   0          32m     app=python,pod-template-hash=68fcf79b55,role=vote,version=v1
+pod/vote-68fcf79b55-8mxhg      1/1     Running   0          32m     app=python,pod-template-hash=68fcf79b55,role=vote,version=v1
+pod/vote-68fcf79b55-p9jl6      1/1     Running   0          24m     app=python,pod-template-hash=68fcf79b55,role=vote,version=v1
+pod/worker-6486977486-2b8zj    1/1     Running   0          19m     app=java,pod-template-hash=6486977486,role=worker,version=v1
+pod/worker-6486977486-f9m2c    1/1     Running   0          19m     app=java,pod-template-hash=6486977486,role=worker,version=v1
+
+NAME              TYPE        CLUSTER-IP      EXTERNAL-IP      PORT(S)          AGE    LABELS
+service/db        ClusterIP   10.97.240.254   <none>           5432/TCP         12m    role=db,tier=back
+service/redis     ClusterIP   10.103.212.98   <none>           6379/TCP         37h    role=redis,tier=back
+service/results   NodePort    10.99.187.145   192.168.56.103   8081:30001/TCP   105s   role=results
+service/vote      NodePort    10.106.38.224   192.168.56.103   8080:30000/TCP   39h    role=vote
+
+NAME                                       DESIRED   CURRENT   READY   AGE     LABELS
+replicaset.extensions/db-7bd9c67878        1         1         1       10m     app=postgres,pod-template-hash=7bd9c67878,role=db,tier=back,version=9.4
+replicaset.extensions/redis-5c4d8f7dd6     2         2         2       51m     app=redis,pod-template-hash=5c4d8f7dd6,role=redis,tier=back,version=latest
+replicaset.extensions/results-65f8f74b77   3         3         3       3m45s   app=node,pod-template-hash=65f8f74b77,role=results,version=v1
+replicaset.extensions/vote-68fcf79b55      3         3         3       50m     app=python,pod-template-hash=68fcf79b55,role=vote,version=v1
+replicaset.extensions/vote-6dd4874774      0         0         0       43m     app=python,pod-template-hash=6dd4874774,role=vote,version=v1
+replicaset.extensions/vote-7bc4b468d       0         0         0       35m     app=python,pod-template-hash=7bc4b468d,role=vote,version=v1
+replicaset.extensions/worker-6486977486    2         2         2       19m     app=java,pod-template-hash=6486977486,role=worker,version=v1
+
+NAME                            READY   UP-TO-DATE   AVAILABLE   AGE     LABELS
+deployment.extensions/db        1/1     1            1           10m     app=postgres,role=db,tier=back,version=9.4
+deployment.extensions/redis     2/2     2            2           51m     <none>
+deployment.extensions/results   3/3     3            3           3m45s   <none>
+deployment.extensions/vote      3/3     3            3           50m     <none>
+deployment.extensions/worker    2/2     2            2           19m     <none>

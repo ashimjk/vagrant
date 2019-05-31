@@ -1,0 +1,18 @@
+## It is a cluster IP type
+## Unlike vote this doesn't need to be exposed to outside world
+## There is no NodePort in here
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    role: redis
+    tier: back
+  name: redis
+  namespace: instavote
+spec:
+  selector:
+    app: redis
+  ports:
+  - port: 6379
+    protocol: TCP
+    targetPort: 6379

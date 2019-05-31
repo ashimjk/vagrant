@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vote
+  namespace: staging
+spec:
+  replicas: 2
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1 # no of extra pod to be created while deploying
+      maxUnavailable: 1 # no of pod to be unavailable wile deploying
+  revisionHistoryLimit: 4
+  paused: false
+  minReadySeconds: 10
+  selector:
+    matchLabels:
+      role: vote
+    matchExpressions:
+      - {key: version, operator: In, values: [v1, v2, v3]}
+  template:
+    metadata:
+      name: vote
+      labels:
+        app: python
+        role: vote
+        version: v1
+    spec:
+      containers:
+        - name: app
+          image: schoolofdevops/vote:latest
+          envFrom:
+            - configMapRef:
+                name: vote
+          ports:
+            - containerPort: 80
+              protocol: TCP
