@@ -1,0 +1,27 @@
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.require_version ">= 1.6.5"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  
+  config.vm.box = "ubuntu/xenial64"
+
+  # Ports for http, https, Express, http-server and Harp
+  config.vm.network "forwarded_port", guest: 3000, host: 3000, host_ip: "127.0.0.1"
+  config.vm.network "forwarded_port", guest: 8080, host: 8080, host_ip: "127.0.0.1"
+  config.vm.network "forwarded_port", guest: 9000, host: 9000, host_ip: "127.0.0.1"
+
+  config.vm.define :sdk do |sdk_config|
+    sdk_config.vm.hostname = "sdk"
+  end
+
+  config.vm.provider "virtualbox" do |vm|
+    vm.name = "Software Development Kit"
+    vm.memory = 2048
+    vm.cpus = 2
+  end
+
+  config.vm.provision :shell, path: "sh/bootstrap.sh"
+
+  config.vm.synced_folder "./sh", "/vagrant", mount_options: ["dmode=775,fmode=777"]
+end
