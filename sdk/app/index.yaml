@@ -1,0 +1,204 @@
+openapi: "3.0.0"
+
+info:
+  title: Product API
+  description: Product Description
+  version: v1
+  termsOfService: http://ashimjk.io/terms/
+  contact:
+    name: Ashim Jung Khadka
+    email: ashim.jung.khadka@gmail.com
+    url: http://ashimjk.io
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+
+servers:
+  - url: '{scheme}://localhost:8082/products/api/v1'
+    description: 'Product Api V1'
+    variables:
+      scheme:
+        description: 'The data set api is accessible via http or https'
+        enum:
+          - 'http'
+          - 'https'
+        default: 'http'
+
+tags:
+  - name: product
+    description: Product Endpoint
+
+paths:
+  /products:
+    summary: products api summary
+    description: products api description
+    get:
+      tags:
+        - product
+      summary: list of products
+      description: provides list of products
+      operationId: getProducts
+      parameters:
+        - name: page
+          in: query
+          description: page of product list
+          required: false
+          example: 1
+          schema:
+            type: integer
+        - name: size
+          in: query
+          description: product list size
+          required: false
+          example: 10
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: list of products
+          content:
+            application/json;charset=UTF-8:
+              example:
+                {
+                  "products": [
+                  {
+                    "id": 1,
+                    "price": 20.2,
+                    "status": "CREATED"
+                  },
+                  {
+                    "id": 2,
+                    "price": 3.5,
+                    "status": "CREATED"
+                  }
+                  ],
+                  "total": 23.7
+                }
+              schema:
+                $ref: '#/components/schemas/ProductListResponse'
+        '400':
+          description: Invalid input data
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: No data found
+    post:
+      tags:
+        - product
+      summary: create product
+      description: store product dataset
+      operationId: createProduct
+      requestBody:
+        description: new product
+        content:
+          application/json;charset=UTF-8:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+      responses:
+        '200':
+          description: Product
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+        '400':
+          description: Invalid input data
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /products/{id}:
+    get:
+      tags:
+        - product
+      summary: get product
+      description: get product by id
+      operationId: getProductById
+      parameters:
+        - name: id
+          in: path
+          example: 1
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: return product
+          content:
+            application/json;charset=UTF-8:
+              schema:
+                $ref: '#/components/schemas/ProductResponse'
+
+components:
+  schemas:
+    ProductListResponse:
+      title: Product List Response
+      type: object
+      example:
+        {
+          "products": [
+          {
+            "id": 1,
+            "price": 20.2,
+            "status": "CREATED"
+          },
+          {
+            "id": 2,
+            "price": 3.5,
+            "status": "CREATED"
+          }
+          ],
+          "total": 23.7
+        }
+      properties:
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductResponse'
+        total:
+          type: number
+    ProductRequest:
+      title: Product Request
+      type: object
+      example:
+        {
+          "price": 20.2
+        }
+      required:
+        - price
+      properties:
+        price:
+          type: number
+    ProductResponse:
+      title: Product Response
+      type: object
+      example:
+        {
+          "id": 1,
+          "price": 20.2,
+          "status": "CREATED"
+        }
+      required:
+        - price
+      properties:
+        id:
+          type: integer
+        price:
+          type: number
+        status:
+          type: string
+          enum:
+            - CREATED
+            - FINISHED
+            - CANCELED
+    ErrorResponse:
+      title: Error Response
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string

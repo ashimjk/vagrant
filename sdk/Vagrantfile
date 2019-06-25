@@ -23,5 +23,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision :shell, path: "sh/bootstrap.sh"
 
+  config.vm.synced_folder "./app", "/home/vagrant/app", mount_options: ["dmode=775,fmode=777"]
+
   config.vm.synced_folder "./sh", "/vagrant", mount_options: ["dmode=775,fmode=777"]
 end
