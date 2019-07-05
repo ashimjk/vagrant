@@ -1,38 +1,28 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/xenial64"
 
-  config.vm.define "ubuntu_minikube" do |ubuntu_minikube|
+  config.vm.define "minikube-local" do |minikube-local|
 
-    config.vm.network "forwarded_port",
-      guest: 8001,
-      host:  8001,
-      auto_correct: true
+    # config.vm.network "forwarded_port", guest: 8001, host: 8001, auto_correct: true
+    # config.vm.network "forwarded_port", guest: 3000, host: 3000, host_ip: "127.0.0.1"
+    # config.vm.network "forwarded_port", guest: 8080, host: 8080, host_ip: "127.0.0.1"
+    # config.vm.network "forwarded_port", guest: 9000, host: 9000, host_ip: "127.0.0.1"
+
+    config.vm.network "private_network", ip: "192.168.56.101"
 
     config.vm.provider "virtualbox" do |vb|
-        vb.name = "Ubuntu Minikube"
+        vb.name = "Minikube"
         vb.memory = "4096"
         vb.cpus = "4"
-
-    args = []
-    config.vm.provision "shell",
-        path: "scripts/java.sh",
-        args: args
-
-    args = []
-    config.vm.provision "shell",
-        path: "scripts/docker.sh",
-        args: args
-
-    args = []
-    config.vm.provision "shell",
-        path: "scripts/minikube.sh",
-        args: args
-
-    args = []
-    config.vm.provision "shell",
-        path: "scripts/kubectl.sh",
-        args: args
     end
+
+    config.vm.synced_folder "./app", "/home/vagrant/app", mount_options: ["dmode=775,fmode=777"]
+
+    config.vm.provision "shell", path: "resources/bootstrap.sh"
+    config.vm.provision "shell", path: "resources/java.sh"
+    config.vm.provision "shell", path: "resources/docker.sh"
+    config.vm.provision "shell", path: "resources/minikube.sh"
+    config.vm.provision "shell", path: "resources/kubectl.sh"
 
   end
 

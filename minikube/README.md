@@ -3,49 +3,51 @@
 ## Vagrant
 
 Available Vagrant Boxes for VirtualBox (and Ubuntu).
-[https://app.vagrantup.com/boxes/search]
+[Vagrant Box](https://app.vagrantup.com/boxes/search)
 
 ```vagrant init ubuntu/xenial64```
 
 This initializes the current directory to be a Vagrant environment by creating an initial Vagrantfile if one does not already exist.
-[https://www.vagrantup.com/docs/cli/init.html]
+[Vagrant Init](https://www.vagrantup.com/docs/cli/init.html)
 
-Please see [https://www.vagrantup.com/docs/vagrantfile/machine_settings.html] for information about Vagrantfile. Below is the explanation of the configuration options of Vagrantfile:
+Please see [Vagrant Settings](https://www.vagrantup.com/docs/vagrantfile/machine_settings.html) for information about Vagrantfile. Below is the explanation of the configuration options of Vagrantfile:
 
 - config.vm.box
   - This configures what box the machine will be brought up against. The value here should be the name of an installed box or a shorthand name of a box in HashiCorp’s Vagrant Cloud.
+
 - config.vm.network
   - Configures networks on the machine. Please see the networking page for more information.
+
 - config.vm.provider
   - Configures provider-specific configuration, which is used to modify settings which are specific to a certain provider. If the provider we are configuring does not exist or is not setup on the system of the person who runs vagrant up, Vagrant will ignore this configuration block. This allows a Vagrantfile that is configured for many providers to be shared among a group of people who may not have all the same providers installed.
+
 - config.vm.provision
   - Configures provisioners on the machine, so that software can be automatically installed and configured when the machine is created. Please see the page on provisioners for more information on how this setting works.
 
-## Minikube
+## [Minikube](https://kubernetes.io/docs/setup/minikube/)
 
 Minikube is a tool that makes it easy to run Kubernetes locally. Minikube runs a single-node Kubernetes cluster for users looking to try out Kubernetes or develop with it day-to-day.
-[https://kubernetes.io/docs/setup/minikube/]
 
-## Docker
+
+## [Docker](https://docs.docker.com/install/overview/)
 
 Docker Community Edition (CE) is ideal for individual developers and small teams looking to get started with Docker and experimenting with container-based apps.
 
 Docker Enterprise Edition (EE) is designed for enterprise development and IT teams who build, ship, and run business critical applications in production at scale.
-[https://docs.docker.com/install/overview/]
+[]
 
 > Minikube –vm-driver=none option requires Docker CE, version 18.06.
 
-[https://docs.docker.com/install/linux/docker-ce/ubuntu/]
 
-## Kubectl
+## [Kubectl](https://kubernetes.io/docs/setup/minikube/#kubectl)
 
 The minikube start command creates a kubectl context called “minikube”. This context contains the configuration to communicate with our Minikube cluster.
-[https://kubernetes.io/docs/setup/minikube/#kubectl]
 
-## Kubernetes Dashboard
+
+## [Kubernetes Dashboard](https://kubernetes.io/docs/setup/minikube/#dashboard)
 
 To access the Kubernetes Dashboard, run this command in a shell after starting Minikube to get the address: minikube dashboard
-[https://kubernetes.io/docs/setup/minikube/#dashboard]
+
 
 ## Interact with the Cluster via the Dashboard
 
@@ -55,22 +57,22 @@ We can access Dashboard using the kubectl command-line tool by running the follo
 
 Kubectl will make Dashboard available at:
 
-http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/.
+[http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/]
 
-The UI can only be accessed from the machine where the command is executed. See kubectl proxy –help for more options.
-[https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/]
+The UI can only be accessed from the machine where the command is executed. See [kubectl proxy](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/) –help for more options.
 
 Because kubectl will make the Dashboard available at:
+
 [http://localhost:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/]
 
 and we wanted to use a Web Browser, so we need to use the forwarded_port configuration option, to forward port 8001 on our host (Mac) to port 8001 on our guest (Ubuntu).
 
-Vagrant forwarded ports allow us to access a port on our host machine and have all data forwarded to a port on the guest machine, over either TCP or UDP.
-[https://www.vagrantup.com/docs/networking/forwarded_ports.html]
+[Vagrant forwarded ports](https://www.vagrantup.com/docs/networking/forwarded_ports.html) allow us to access a port on our host machine and have all data forwarded to a port on the guest machine, over either TCP or UDP.
+
 
 ## Minikube Dashboard URL Issue
 
-When we used the following commands in the end part of the minikube.sh file in order to get the dashboard URL, in the output we will get the error, see below.
+When we used the following commands in the end part of the `minikube.sh` file in order to get the dashboard URL, in the output we will get the error, see below.
 
 ### Start a Cluster
 
@@ -125,7 +127,7 @@ ubuntu_minikube: http://127.0.0.1:42796/api/v1/namespaces/kube-system/services/h
 ```
 
 On the Internet I found others had the same problem, but it seems to be done intentionally as a security precaution.
-[https://github.com/kubernetes/minikube/issues/3236]
+[Block minikube access remotely](https://github.com/kubernetes/minikube/issues/3236)
 
 So, I removed the minikube dashboard –url command, because from the documentation and the output we know by now the dashboard URL.
 
@@ -135,7 +137,7 @@ In a Web Browser I entered the URL:
 And got an error message: This site can’t be reached.
 
 So again, a had to find a solution. I search on the Internet and found a solution that worked for me.
-[https://stackoverflow.com/questions/47173463/how-to-access-local-kubernetes-minikube-dashboard-remotely/47585628]
+[Access Minikube Remotely](https://stackoverflow.com/questions/47173463/how-to-access-local-kubernetes-minikube-dashboard-remotely/47585628)
 
 In the scripts directory I changed file kubectl.sh to the following content:
 
@@ -186,12 +188,12 @@ Again, we get the message we have seen before.
 The connection to the server <server-name:port> was refused – did we specify the right host or port?
 
 If we see a message similar to the following, kubectl is not correctly configured or not able to connect to a Kubernetes cluster.
-[https://kubernetes.io/docs/tasks/tools/install-kubectl/#check-the-kubectl-configuration]
+[Kubectl Configuration](https://kubernetes.io/docs/tasks/tools/install-kubectl/#check-the-kubectl-configuration)
 
 Earlier we fixed the connection to the Kubernetes cluster, so now let’s focus on having the correct configuration.
 
 By default, kubectl looks for a file named config in the $HOME/.kube directory. We can specify other kubeconfig files by setting the KUBECONFIG environment variable or by setting the –kubeconfig flag.
-[https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/]
+[Cluster Access KubeConfig](https://kubernetes.io/docs/concepts/configuration/organize-cluster-access-kubeconfig/)
 
 To make kubectl work for our non-root user, run these commands, which are also part of the kubeadm init output:
 
@@ -205,7 +207,7 @@ Alternatively, if we are the root user, we can run:
 
 `export KUBECONFIG=/etc/kubernetes/admin.conf`
 
-[https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/]
+[Create Cluster Kubeadm](https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/)
 
 Until now all the commands via the Vagrantfile (and provisioning scripts) are via Vagrant executed as user root with /root as $HOME.
 
