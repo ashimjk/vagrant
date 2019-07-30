@@ -1,12 +1,12 @@
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/xenial64"
 
-  config.vm.define "minikube-local" do |minikube-local|
+  config.vm.define "minikube_local" do |minikube_local|
 
-    # config.vm.network "forwarded_port", guest: 8001, host: 8001, auto_correct: true
-    # config.vm.network "forwarded_port", guest: 3000, host: 3000, host_ip: "127.0.0.1"
-    # config.vm.network "forwarded_port", guest: 8080, host: 8080, host_ip: "127.0.0.1"
-    # config.vm.network "forwarded_port", guest: 9000, host: 9000, host_ip: "127.0.0.1"
+    config.vm.network "forwarded_port", guest: 8001, host: 8001, auto_correct: true
+    config.vm.network "forwarded_port", guest: 3000, host: 3000, host_ip: "127.0.0.1"
+    config.vm.network "forwarded_port", guest: 8080, host: 8080, host_ip: "127.0.0.1"
+    config.vm.network "forwarded_port", guest: 9000, host: 9000, host_ip: "127.0.0.1"
 
     config.vm.network "private_network", ip: "192.168.56.101"
 
