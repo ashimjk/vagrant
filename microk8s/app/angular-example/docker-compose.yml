@@ -1,0 +1,12 @@
+version: '3'
+services:
+  ashimjk/angular-example:
+    container_name: angular-example
+    build:
+      context: .
+      dockerfile: dockerfile-dev
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - '4201:4200'
