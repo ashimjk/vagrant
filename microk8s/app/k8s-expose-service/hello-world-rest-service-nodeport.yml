@@ -1,0 +1,12 @@
+# curl -v http://192.168.56.101:30000/ping
+kind: Service
+apiVersion: v1
+metadata:
+  name: hello-world-rest
+spec:
+  type: NodePort
+  ports:
+    - port: 5050
+      nodePort: 30000
+  selector:
+    name: hello-world-rest

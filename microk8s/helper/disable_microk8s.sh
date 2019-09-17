@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-export KUBECONFIG="${KUBECONFIG_SAVED_MICROK8S}"
-
-unset KUBECONFIG_SAVED_MICROK8S

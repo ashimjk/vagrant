@@ -1,0 +1,10 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: bar-app
+spec:
+  type: NodePort
+  ports:
+    - port: 8080
+  selector:
+    name: bar-app

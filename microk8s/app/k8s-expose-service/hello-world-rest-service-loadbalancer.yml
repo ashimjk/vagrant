@@ -1,0 +1,14 @@
+# curl -v http://10.152.183.239:5050/ping
+# cluster_ip:port
+# curl -v http://10.1.1.7:5050/ping
+# pod_id:port
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-world-rest
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 5050
+  selector:
+    name: hello-world-rest

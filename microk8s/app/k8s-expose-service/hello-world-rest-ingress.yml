@@ -1,0 +1,12 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: hello-world-rest
+spec:
+  rules:
+    - host: microk8s.ashimjk.io
+      http:
+        paths:
+          - backend:
+              serviceName: hello-world-rest
+              servicePort: 8086

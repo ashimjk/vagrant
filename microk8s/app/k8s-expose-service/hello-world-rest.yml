@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-world-rest
+  labels:
+    name: hello-world-rest
+spec:
+  containers:
+    - name: hello-world-rest
+      image: vad1mo/hello-world-rest
+      ports:
+        - containerPort: 5050
