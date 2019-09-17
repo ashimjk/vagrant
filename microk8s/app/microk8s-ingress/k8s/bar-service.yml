@@ -1,10 +1,13 @@
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
   name: bar-app
 spec:
-  type: NodePort
-  ports:
-    - port: 8080
   selector:
-    name: bar-app
+    app: bar-app
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
+      protocol: TCP
