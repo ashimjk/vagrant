@@ -5,14 +5,19 @@ metadata:
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  tls:
+    - hosts:
+        - ashimjk.io
+      secretName: k8ssecret
   rules:
-  - http:
-      paths:
-        - path: /foo
-          backend:
-            serviceName: foo-app
-            servicePort: 8080
-        - path: /bar
-          backend:
-            serviceName: bar-app
-            servicePort: 8080
+    - host: ashimjk.io
+      http:
+        paths:
+          - path: /foo
+            backend:
+              serviceName: foo-app
+              servicePort: 8080
+          - path: /
+            backend:
+              serviceName: bar-app
+              servicePort: 8080

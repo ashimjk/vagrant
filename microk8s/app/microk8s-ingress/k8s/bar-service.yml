@@ -5,9 +5,10 @@ metadata:
 spec:
   selector:
     app: bar-app
-  type: ClusterIP
+  type: NodePort
   ports:
     - name: http
       port: 80
       targetPort: 8080
+      nodePort: 30036 # specified explictly
       protocol: TCP

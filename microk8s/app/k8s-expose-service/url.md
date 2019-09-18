@@ -10,3 +10,6 @@ curl -v http://hello-world-rest:30000/ping
 curl -v http://10.152.183.28:30500/ping
 curl -v http://10.152.183.28:5050/ping
 curl -v http://10.1.1.7:5050/ping
+
+http://alesnosek.com/blog/2017/02/14/accessing-kubernetes-pods-from-outside-of-the-cluster/
+

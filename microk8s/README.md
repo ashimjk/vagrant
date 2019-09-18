@@ -62,3 +62,4 @@ permissions as shown in https://github.com/kubernetes/dashboard/wiki/Creating-sa
 - [Microk8s Dashboard Issue](https://github.com/ubuntu/microk8s/issues/292)
 - [Accessing Dashboard](https://github.com/kubernetes/dashboard/wiki/Accessing-Dashboard---1.7.X-and-above)
 - [Distributed kubernetes cluster](https://medium.com/@jimmysongio/setting-up-a-kubernetes-cluster-with-vagrant-and-virtualbox-3bb854017b60)
+- [Ingress Nginx](https://github.com/kubernetes/ingress-nginx/blob/master/deploy/static/mandatory.yaml)
